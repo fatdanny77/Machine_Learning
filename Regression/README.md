@@ -1,2 +1,2 @@
 # Regression
-I use a dataset of econometrics course in NTU.
+I used a dataset of econometrics course in NTU.
