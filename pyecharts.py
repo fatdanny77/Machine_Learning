@@ -28,26 +28,38 @@ bar.render_notebook()
 
 ###############################################################
 class Color():
-    def __init__(self, score):
-        self.score = score
     
-    # 可以利用self取得自己這個類別裡面的變數
+    def __init__(self, channel, dic):
+        self.channel = channel
+        self.dic = dic
+    
     def score_color(self):
-        if self.score <= 60:
-            return '#FFA1A1'
-        elif 60 < self.score <= 100:
-            return '#FFD59E'
-        elif 100 < self.score :
-            return '#B3E283'   
+        score = [round(v/2, 2) for v in sorted(self.dic.values())] 
+        return score
     
-
-print(AC_Death)
+    def score_prod(self, prod):
+        color = {}
+        score = [round(v/200,5) for v in sorted(self.dic.values())] 
+        color[score[0]]='#B3E283'
+        color[score[1]]='#FFD59E'
+        color[score[2]]='#FFA1A1'
+        if self.channel == 'BR':
+            color[score[3]]='#BD84E6'
+        
+        color1 = {}
+        for k, v in color.items():
+            color1[round(k*200, 2)] = v
+        prod_score = self.dic[prod]
+        a = [[i, j] for i, j in color1.items() if i == prod_score]
+        return a[0][1]
 ###############################################################
 
 
-AC_Death = Color(94).score_color()
-AC_Health = Color(48).score_color()
-AC_One = Color(90).score_color()
+AC_Score = Color('AC', AC_Dic).score_color()
+AC_Death = Color('AC', AC_Dic).score_prod('AC_Death')
+AC_Health = Color('AC', AC_Dic).score_prod('AC_Health')
+AC_One = Color('AC', AC_Dic).score_prod('AC_One')
+
 
 AC = (
     Gauge(
@@ -65,7 +77,7 @@ AC = (
         ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(AC_Score[0], "#B3E283"), (AC_Score[1], "#FFD59E"), (1, '#FFA1A1')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -105,7 +117,7 @@ AC = (
             ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(AC_Score[0], "#B3E283"), (AC_Score[1], "#FFD59E"), (1, '#FFA1A1')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -146,7 +158,7 @@ AC = (
             ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(AC_Score[0], "#B3E283"), (AC_Score[1], "#FFD59E"), (1, '#FFA1A1')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -194,10 +206,13 @@ AC = (
 AC.render_notebook()
 
 
-BR_Death = Color(166).score_color()
-BR_Health = Color(107).score_color()
-BR_Long = Color(10).score_color()
-BR_One = Color(151).score_color()
+
+
+BR_Score = Color('BR', BR_Dic).score_color()
+BR_Death = Color('BR', BR_Dic).score_prod('BR_Death')
+BR_Health = Color('BR', BR_Dic).score_prod('BR_Health')
+BR_Long = Color('BR', BR_Dic).score_prod('BR_Long')
+BR_One = Color('BR', BR_Dic).score_prod('BR_One')
 
 #寫個if變數，決定儀表板長度
 
@@ -217,7 +232,7 @@ BR = (
         ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(BR_Score[0], "#B3E283"), (BR_Score[1], "#FFD59E"), (BR_Score[2], '#FFA1A1'), (1, '#BD84E6')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -257,7 +272,7 @@ BR = (
             ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(BR_Score[0], "#B3E283"), (BR_Score[1], "#FFD59E"), (BR_Score[2], '#FFA1A1'), (1, '#BD84E6')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -299,7 +314,7 @@ BR = (
             ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(BR_Score[0], "#B3E283"), (BR_Score[1], "#FFD59E"), (BR_Score[2], '#FFA1A1'), (1, '#BD84E6')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -339,7 +354,7 @@ BR = (
             ),
         axisline_opts=opts.AxisLineOpts(
             linestyle_opts=opts.LineStyleOpts(
-                color=[(0.3, "#FFA1A1"), (0.5, "#FFD59E"), (1, '#B3E283')], width=30  # 设置区间颜色、仪表宽度
+                color=[(BR_Score[0], "#B3E283"), (BR_Score[1], "#FFD59E"), (BR_Score[2], '#FFA1A1'), (1, '#BD84E6')], width=30  # 设置区间颜色、仪表宽度
             )
         ),
         detail_label_opts=(
@@ -385,7 +400,6 @@ BR = (
     )
 )
 BR.render_notebook()
-
 
 from pyecharts.charts import Page
 page = Page()  
